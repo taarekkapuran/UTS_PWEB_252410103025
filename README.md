@@ -1,10 +1,7 @@
-# Forza Motor (UTS Pemrograman Web, Laravel + Blade)
+<img width="640" height="298" alt="Screenshot 2026-11-20 191843" src="https://github.com/user-attachments/assets/b50a37be-1524-4685-8fce-c8deac8e0b63" />
 
-## Cara pakai
-1. Buat proyek baru: `composer create-project laravel/laravel forza-motor`
-2. Salin ke proyek tersebut (timpa jika diminta): `routes/`, `app/`, `resources/`, `public/images/`
-3. Jalankan `php artisan serve`, lalu buka http://127.0.0.1:8000
+Forza Motor adalah aplikasi web showroom motor mewah yang dibangun dengan Laravel murni menggunakan arsitektur MVC dan sistem templating Blade, tanpa template jadi. Aplikasi memiliki empat halaman, yaitu Login, Dashboard, Pengelolaan, dan Profile. Tema pengelolaan yang dipilih adalah pengelolaan unit motor, dengan lima model yang ditampilkan: Ducati Panigale V4 R, Harley-Davidson CVO Road Glide ST, Aprilia Tuono V4 Factory, Ducati Streetfighter V4 SP, dan KTM 300 EXC. Spesifikasi tiap motor mengacu pada situs resmi masing-masing pabrikan.
 
-## Alur data
-Form login (GET) -> `/dashboard?username=...` -> PageController -> view.
-Link navbar membawa `?username=` ke Dashboard, Pengelolaan, dan Profile.
+Alur aplikasi mengikuti pola Route, Controller, lalu View. File `routes/web.php` mengarahkan setiap URL ke method di `PageController`, yang menerima request, membaca parameter `username` dari URL, menyiapkan data dalam bentuk array, lalu mengirimkannya ke view melalui `view()`. Data motor disimpan di controller, bukan di-hardcode di view. Simulasi login dilakukan dengan form bermetode GET yang mengirim username sebagai request parameter ke `/dashboard`, lalu parameter yang sama dibawa ke halaman Pengelolaan dan Profile lewat link pada navbar. Jika username kosong, pengguna dikembalikan ke halaman login.
+
+Sisi tampilan menggunakan fitur Blade secara lengkap. Layout utama `layouts/app.blade.php` memakai `@yield` dan `@include`, setiap halaman memakai `@extends` dan `@section`, navbar dipanggil sebagai Blade Component lewat `<x-navbar>`, dan data array dirender dengan perulangan `@foreach` pada kartu koleksi, tabel pengelolaan, dan daftar spesifikasi. Untuk menjalankan proyek, salin folder `routes`, `app`, `resources`, dan `public` ke proyek Laravel, jalankan `composer install`, `php artisan key:generate`, lalu `php artisan serve`, dan buka `http://127.0.0.1:8000`. Pada `.env`, ubah `SESSION_DRIVER` dan `CACHE_STORE` menjadi `file` karena aplikasi ini tidak memakai database.
